@@ -1,12 +1,15 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from models.message import db
+from aop.error_handler import initialize_error_handlers
 
 
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://admin:Danmoai0?JWJ@team-blue-database.cbagagysshae.us-east-2.rds.amazonaws.com/Message_DB'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+initialize_error_handlers(app)
 
 db.init_app(app)
 
