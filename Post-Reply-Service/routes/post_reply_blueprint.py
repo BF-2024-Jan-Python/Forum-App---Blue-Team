@@ -19,6 +19,8 @@ post_reply_blueprint.add_url_rule('/drafts', view_func=AllUnpublishedPostsView.a
 post_reply_blueprint.add_url_rule('/all-banned-posts', view_func=AllBannedPostView.as_view('all_ban_post'), methods=['GET'])
 post_reply_blueprint.add_url_rule('/all-deleted-posts', view_func=AdminGetDeletePostView.as_view('all_deleted_post'), methods=['GET'])
 post_reply_blueprint.add_url_rule('/all-hidden-posts', view_func=AllHiddenPostView.as_view('all_hidden_post'), methods=['GET'])
+post_reply_blueprint.add_url_rule('/all-posts-by-user', view_func=GetPublishedPostByUserView.as_view('posts-by-user'), methods=['GET'])
+
 
 
 post_reply_blueprint.add_url_rule('/<int:post_id>/reply', view_func=ReplyListView.as_view('reply_list_and_create'), methods=['POST', 'GET'])

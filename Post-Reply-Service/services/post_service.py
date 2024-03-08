@@ -218,6 +218,9 @@ class PostService:
     def get_hidden_post(self, user_id):
         return self.post_repository.get_hidden_posts_by_user(user_id)
 
+    def get_post_by_userid(self, user_id):
+        return self.post_repository.get_post_by_userid(user_id)
+
 
 
 

@@ -144,7 +144,7 @@ function UserProfilePage() {
           const response = await fetch('http://127.0.0.1:5000/post_and_reply/drafts', {
             method: 'GET',
             headers: {
-                // 'Content-Type': 'application/json',
+                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
             });
@@ -152,8 +152,7 @@ function UserProfilePage() {
               throw new Error('Failed to fetch user data');
           }
           const data = await response.json();
-          setAllDraftPosts(data['drafts']);
-          setAllTopPosts(data['top']);
+          setAllDraftPosts(data);
 
       } catch (error) {
           console.error("Error fetching posts:", error);
@@ -162,7 +161,7 @@ function UserProfilePage() {
 
     const fetchTop3Posts = async () => {
       try {
-          const response = await fetch('http://127.0.0.1:5000/post_and_reply/top', {
+          const response = await fetch('http://127.0.0.1:5000/post-details/top3', {
             method: 'GET',
             headers: {
                 // 'Content-Type': 'application/json',
@@ -179,38 +178,15 @@ function UserProfilePage() {
       }
     };
 
-    const fetchTopPosts = async () => {
-      try {
-          const response = await fetch('http://127.0.0.1:5000/post-details/top', {
-            method: 'GET',
-            headers: {
-                // 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            });
-          if (!response.ok) {
-              throw new Error('Failed to fetch top post data');
-          }
-          const data = await response.json();
-          console.log(data)
-          setAllTopPosts(data);
-      } catch (error) {
-          console.error("Error fetching posts:", error);
-      }
-    };
 
     useEffect(() => {
         fetchUserData();
-        // fetchTop3Posts();
         fetchHistory();
         fetchDrafts();
 
+        // fetchTop3Posts();
     }, []);
 
-    // useEffect(() => {
-    //     fetchDrafts();
-    //
-    // }, []);
 
     const handleVerifyNow = () => {
       if (userStatus === 'Normal') {
@@ -258,16 +234,16 @@ function UserProfilePage() {
                 )}
             </section>
 
-            {/* <section>
-        <h2>Top3 Posts</h2>
-        <ul>
-          {allTopPosts.map((post, index) => (
-            <Link to={`/post/${post.postId}`} key={index}>
-              <PostCard post={post} />
-            </Link>
-          ))}
-        </ul>
-      </section> */}
+          {/*  <section>*/}
+          {/*  <h2>Top3 Posts</h2>*/}
+          {/*  <ul>*/}
+          {/*    {allTopPosts.map((post, index) => (*/}
+          {/*      <Link to={`/post/${post.postId}`} key={index}>*/}
+          {/*        <PostCard post={post} />*/}
+          {/*      </Link>*/}
+          {/*    ))}*/}
+          {/*  </ul>*/}
+          {/*</section> */}
 
             <section className="history-section">
                 <h2>Browsing History</h2>
@@ -291,16 +267,16 @@ function UserProfilePage() {
                 </ul>
             </section>
 
-            <section className="history-section">
-                <h2>Top 3 Posts</h2>
-                <ul>
-                    {allTopPosts.map((post, index) => (
-                        <Link to={`/post/${post.postId}`} key={index}>
-                            <PostCard post={post}/>
-                        </Link>
-                    ))}
-                </ul>
-            </section>
+            {/*<section className="history-section">*/}
+            {/*    <h2>Top 3 Posts</h2>*/}
+            {/*    <ul>*/}
+            {/*        {allTopPosts.map((post, index) => (*/}
+            {/*            <Link to={`/post/${post.postId}`} key={index}>*/}
+            {/*                <PostCard post={post}/>*/}
+            {/*            </Link>*/}
+            {/*        ))}*/}
+            {/*    </ul>*/}
+            {/*</section>*/}
 
 
         </div>

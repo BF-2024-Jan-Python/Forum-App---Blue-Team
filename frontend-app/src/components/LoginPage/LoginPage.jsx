@@ -35,7 +35,7 @@ function LoginPage() {
       navigate('/home');
     } 
     else {
-      navigate('/user-profile');
+      navigate('/home');
     }
   };
 

@@ -143,12 +143,8 @@ class AllUnpublishedPostsView(MethodView):
 
     @token_required
     def get(self, user_id, user_status):
-        drafts, posts = self.post_service.get_unpublished_posts(user_id)
-        return jsonify({'drafts': [draft.serialize() for draft in drafts], 'top': [{'postId': post.Post.postId,
-                                 'content': post.Post.content,
-                                 'title': post.Post.title,
-                                 'replyCount': post.reply_count,
-                                 } for post in posts]}), 200
+        drafts = self.post_service.get_unpublished_posts(user_id)
+        return jsonify([draft.serialize() for draft in drafts]), 200
 
 
 class AllBannedPostView(MethodView):
@@ -183,3 +179,12 @@ class AllHiddenPostView(MethodView):
     def get(self, user_id, user_status):
         result = self.post_service.get_hidden_post(user_id)
         return jsonify([hidden_post.serialize() for hidden_post in result]), 200
+
+class GetPublishedPostByUserView(MethodView):
+    def __init__(self):
+        self.post_service = PostService()
+
+    @token_required
+    def get(self, user_id, user_status):
+        result = self.post_service.get_post_by_userid(user_id)
+        return jsonify([post.serialize() for post in result]), 200

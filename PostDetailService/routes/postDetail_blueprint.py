@@ -8,3 +8,4 @@ postDetail_blueprint.add_url_rule('/<int:post_id>', view_func=PostDetailView.as_
 postDetail_blueprint.add_url_rule('/', view_func=UserHomeView.as_view('user_home'), methods=['GET'])
 postDetail_blueprint.add_url_rule('/admin', view_func=AdminHomeView.as_view('admin_home'), methods=['GET'])
 postDetail_blueprint.add_url_rule('/top', view_func=TopPostView.as_view('top_post'), methods=['GET'])
+postDetail_blueprint.add_url_rule('/top3', view_func=Top3PostView.as_view('top3_post'), methods=['GET'])

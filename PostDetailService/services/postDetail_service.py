@@ -270,3 +270,48 @@ class PostDetailService:
         print(aggregated_data_list)
         return aggregated_data_list
 
+    def get_top_3_posts(self):
+        token = request.headers.get('Authorization')
+        headers = {'Authorization': f'{token}'}
+        try:
+            post_response = requests.get(f'{self.post_and_reply_service_url}/all-posts-by-user', headers=headers)
+            if post_response.status_code == 200:
+                posts_data = post_response.json()
+            else:
+                return {'error': f'Failed to fetch posts, status code: {post_response.status_code}'}
+        except ValueError:
+            return {'error': 'Invalid JSON response from posts service'}
+
+        aggregated_data_list = []
+
+        for post in posts_data:
+            post_id = post['postId']
+            try:
+                reply_response = requests.get(f'{self.post_and_reply_service_url}/{post_id}/reply')
+                if reply_response.status_code == 200:
+                    reply_data = reply_response.json()
+                    reply_count = len(reply_data['replies'])
+                else:
+                    reply_count = 0
+            except ValueError:
+                aggregated_data_list.append({'error': f'Invalid JSON response for user with ID {user_id}'})
+
+            # post_detail_data = self.get_post_detail(post_id)
+            aggregated_data = {
+                'postId': post_id,
+                # 'firstName': post_detail_data['user']['firstName'],
+                # 'lastName': post_detail_data['user']['lastName'],
+                # 'date': post_detail_data['dateModified'] if post_detail_data.get('dateModified') else post_detail_data[
+                #     'dateCreated'],
+                # 'title': post_detail_data['title'],
+                'title': post['title'],
+                'reply_count': reply_count,
+            }
+            aggregated_data_list.append(aggregated_data)
+
+        sorted_aggregated_data_list = sorted(aggregated_data_list, key=lambda x: x.get('reply_count', 0), reverse=True)
+
+        top_3_posts = sorted_aggregated_data_list[:3]
+
+        return top_3_posts
+

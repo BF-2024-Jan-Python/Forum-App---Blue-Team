@@ -19,6 +19,7 @@ export default function HomePage() {
         try {
             const response = await fetch("http://127.0.0.1:5000/post-details/");
             const data = await response.json();
+            // setAllPosts(data)
             setAllPosts(data.filter(post => post.title && post.firstName && post.lastName && post.date));
         } catch (error) {
             console.error("Error fetching posts:", error);
@@ -50,7 +51,7 @@ export default function HomePage() {
             <button onClick={handleSort}>{sortAscending ? "Sort Ascending" : "Sort Descending"}</button>
 
 
-            <AddPostPage open={showAddPost} onClose={toggleAddPost} fetchPosts={fetchPosts} />
+            <AddPostPage open={showAddPost} onClose={toggleAddPost} fetchPosts={fetchPosts}/>
 
             <div>
                 {allPosts.map((post, index) => (

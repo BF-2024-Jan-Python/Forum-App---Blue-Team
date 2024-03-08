@@ -47,3 +47,13 @@ class TopPostView(MethodView):
         print('im here')
         user_home = self.top_post_service.get_top_post_data()
         return jsonify(user_home), 200
+
+class Top3PostView(MethodView):
+
+    def __init__(self):
+        self.top_post_service = PostDetailService()
+
+    @token_required
+    def get(self, user_id, user_status):
+        user_home = self.top_post_service.get_top_3_posts()
+        return jsonify(user_home), 200

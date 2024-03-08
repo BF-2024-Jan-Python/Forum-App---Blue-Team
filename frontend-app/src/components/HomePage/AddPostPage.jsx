@@ -1,13 +1,13 @@
 import React, { useState }  from 'react';
 
-function AddPostPage({ open, onClose, fetchPosts }) {
+function AddPostPage({ open, onClose, fetchPosts}) {
   if (!open) return null;
 
   const [postData, setPostData] = useState({
     title: "",
     content: "",
     isArchived: false,
-    status: "Published"
+    status: "Published",
     });
     const [profileImage, setProfileImage] = useState('');
 
@@ -28,10 +28,11 @@ function AddPostPage({ open, onClose, fetchPosts }) {
           setProfileImage({ file_path: imageUrl, file_object: fileData });
       };
       reader.readAsDataURL(file);
+
     };
 
   const handleSubmit = async () => {
-    try {
+     try {
         const finalPostData = { ...postData };
         if (profileImage) {
           finalPostData.images = [profileImage];
@@ -45,7 +46,7 @@ function AddPostPage({ open, onClose, fetchPosts }) {
             },
             body: JSON.stringify(finalPostData)
         });
-        
+
         onClose();
         fetchPosts();
     } catch (error) {
